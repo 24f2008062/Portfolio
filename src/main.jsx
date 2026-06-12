@@ -151,7 +151,7 @@ function Header({ activePage }) {
         </a>
         <a
           className="nav-resume"
-          href="Sanidhya_Srivastava_Resume.pdf"
+          href="https://drive.google.com/file/d/1QThCiIKXStWtBA8Ge4k9h47wVk8xh3L6/preview"
           target="_blank"
           rel="noreferrer"
         >
