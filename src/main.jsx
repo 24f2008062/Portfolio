@@ -23,29 +23,31 @@ import "./styles.css";
 const profile = {
   name: "Sanidhya Srivastav",
   role: "Software Engineer",
-  email: "sanidhya@example.com",
-  github: "https://github.com/your-username",
-  linkedin: "https://linkedin.com/in/your-username",
+  email: "sanidhyasrivastava01@gmail.com",
+  github: "https://github.com/sanidhyexe",
+  linkedin: "https://linkedin.com/in/sanidhya-srivastava-403442300/",
 };
 
 const skills = ["HTML", "CSS", "JavaScript", "Python", "SQL", "C"];
 
 const projects = [
   {
-    title: "eSports Tournament Management Platform",
+    title: "VORT-X",
     type: "Full-stack web app",
     description:
       "A design-led platform for organizing tournaments across multiple games, built around clear flows for teams, brackets, schedules, and event control.",
     tags: ["Tournament Ops", "Dashboard UX", "Multi-game"],
     status: "Design-focused build",
+    link: "https://github.com/sanidhyexe/VORT-X",
   },
   {
-    title: "DSA Learning Platform",
+    title: "Algo Master AI",
     type: "Learning product",
     description:
       "A personalized dashboard experience for students to track progress, stay consistent, and improve problem-solving through structured practice.",
     tags: ["EdTech", "Progress Tracking", "Student UX"],
     status: "Vibe-coded prototype",
+    link: "https://github.com/sanidhyexe/Algo-Master-AI",
   },
 ];
 
@@ -54,14 +56,14 @@ const timeline = [
     icon: GraduationCap,
     title: "B.Tech CSE",
     meta: "AKTU",
-    duration: "Jul 2022 - Jun 2026",
+    duration: "2024 - 2028",
     text: "Undergraduate in Computer Science and Engineering at Dr. A.P.J. Abdul Kalam Technical University.",
   },
   {
     icon: Cpu,
     title: "B.S. Data Science",
     meta: "IIT Madras",
-    duration: "May 2023 - Present",
+    duration: "2024 - 2028",
     text: "Pursuing Data Science and Applications with a focus on analytical thinking and applied computation.",
   },
   {
@@ -147,9 +149,14 @@ function Header({ activePage }) {
           Contact
           <ArrowUpRight size={14} />
         </a>
-        <a className="nav-resume" href="/resume.pdf" download>
+        <a
+          className="nav-resume"
+          href="Sanidhya_Srivastava_Resume.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
           Resume
-          <Download size={14} />
+          <ArrowUpRight size={14} />
         </a>
       </div>
     </header>
@@ -326,7 +333,13 @@ function Projects() {
       </div>
       <div className="project-grid">
         {projects.map((project, index) => (
-          <article className="project-card" key={project.title}>
+          <a
+            className="project-card"
+            key={project.title}
+            href={project.link}
+            target="_blank"
+            rel="noreferrer"
+          >
             <div className="project-index">0{index + 1}</div>
             <p className="project-type">{project.type}</p>
             <h3>{project.title}</h3>
@@ -340,7 +353,7 @@ function Projects() {
               <span>{project.status}</span>
               <ArrowUpRight size={18} />
             </div>
-          </article>
+          </a>
         ))}
       </div>
     </section>
