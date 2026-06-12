@@ -1,0 +1,416 @@
+import React, { useEffect, useState } from "react";
+import { createRoot } from "react-dom/client";
+import {
+  ArrowUpRight,
+  Award,
+  Code2,
+  Cpu,
+  Download,
+  Github,
+  GraduationCap,
+  Linkedin,
+  Mail,
+  PanelsTopLeft,
+  RadioTower,
+  ShieldCheck,
+  Sparkles,
+  Terminal,
+  Trophy,
+  Users,
+} from "lucide-react";
+import "./styles.css";
+
+const profile = {
+  name: "Sanidhya Srivastav",
+  role: "Software Engineer",
+  email: "sanidhya@example.com",
+  github: "https://github.com/your-username",
+  linkedin: "https://linkedin.com/in/your-username",
+};
+
+const skills = ["HTML", "CSS", "JavaScript", "Python", "SQL", "C"];
+
+const projects = [
+  {
+    title: "eSports Tournament Management Platform",
+    type: "Full-stack web app",
+    description:
+      "A design-led platform for organizing tournaments across multiple games, built around clear flows for teams, brackets, schedules, and event control.",
+    tags: ["Tournament Ops", "Dashboard UX", "Multi-game"],
+    status: "Design-focused build",
+  },
+  {
+    title: "DSA Learning Platform",
+    type: "Learning product",
+    description:
+      "A personalized dashboard experience for students to track progress, stay consistent, and improve problem-solving through structured practice.",
+    tags: ["EdTech", "Progress Tracking", "Student UX"],
+    status: "Vibe-coded prototype",
+  },
+];
+
+const timeline = [
+  {
+    icon: GraduationCap,
+    title: "B.Tech CSE",
+    meta: "AKTU",
+    duration: "Jul 2022 - Jun 2026",
+    text: "Undergraduate in Computer Science and Engineering at Dr. A.P.J. Abdul Kalam Technical University.",
+  },
+  {
+    icon: Cpu,
+    title: "B.S. Data Science",
+    meta: "IIT Madras",
+    duration: "May 2023 - Present",
+    text: "Pursuing Data Science and Applications with a focus on analytical thinking and applied computation.",
+  },
+  {
+    icon: Trophy,
+    title: "Hackathon Leadership",
+    meta: "Smart India Hackathon and more",
+    duration: "Jan 2023 - Present",
+    text: "Led teams through ideation, product direction, and fast execution for real-world problem statements.",
+  },
+  {
+    icon: Users,
+    title: "UI/UX Workshops",
+    meta: "College community",
+    duration: "Feb 2023 - Apr 2024",
+    text: "Conducted workshops on design thinking, interface decisions, and user-centered product development.",
+  },
+];
+
+const educationItems = timeline.slice(0, 2);
+const experienceItems = timeline.slice(2);
+
+const pages = ["about", "work", "journey", "contact"];
+
+function App() {
+  const [activePage, setActivePage] = useState(getPageFromHash);
+
+  useEffect(() => {
+    const syncPage = () => setActivePage(getPageFromHash());
+    window.addEventListener("hashchange", syncPage);
+    return () => window.removeEventListener("hashchange", syncPage);
+  }, []);
+
+  return (
+    <main>
+      <div className="matrix-grid" aria-hidden="true" />
+      <Header activePage={activePage} />
+      <Page activePage={activePage} />
+    </main>
+  );
+}
+
+function getPageFromHash() {
+  const page = window.location.hash.replace("#", "") || "about";
+  return pages.includes(page) ? page : "about";
+}
+
+function Page({ activePage }) {
+  if (activePage === "about") return <About />;
+  if (activePage === "work") return <Projects />;
+  if (activePage === "journey") return <Experience />;
+  if (activePage === "contact") return <Contact />;
+  return <About />;
+}
+
+function Header({ activePage }) {
+  return (
+    <header className="site-header">
+      <a className="brand" href="#about" aria-label="Sanidhya Srivastav home">
+        <Terminal size={18} />
+        <span>sanidhya</span>
+        <small>software engineer</small>
+      </a>
+      <div className="nav-shell">
+        <span className="nav-status">online</span>
+        <nav aria-label="Primary navigation">
+          <a className={activePage === "about" ? "active" : ""} href="#about">
+            About
+          </a>
+          <a className={activePage === "work" ? "active" : ""} href="#work">
+            Work
+          </a>
+          <a
+            className={activePage === "journey" ? "active" : ""}
+            href="#journey"
+          >
+            Journey
+          </a>
+        </nav>
+        <a
+          className={`nav-cta ${activePage === "contact" ? "active" : ""}`}
+          href="#contact"
+        >
+          Contact
+          <ArrowUpRight size={14} />
+        </a>
+        <a className="nav-resume" href="/resume.pdf" download>
+          Resume
+          <Download size={14} />
+        </a>
+      </div>
+    </header>
+  );
+}
+
+function About() {
+  return (
+    <div className="page-view">
+      <Hero />
+      <SignalStrip />
+      <section className="quick-glance" aria-label="Quick glance">
+        <article>
+          <span>01</span>
+          <h3>Builder Profile</h3>
+          <p>
+            Software engineer with a product mindset, UI/UX sensitivity, and
+            hands-on project execution.
+          </p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Current Track</h3>
+          <p>
+            B.Tech CSE at AKTU plus B.S. Data Science and Applications at IIT
+            Madras.
+          </p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Proof Points</h3>
+          <p>
+            Hackathon leadership, UI/UX workshops, and two design-focused web
+            application concepts.
+          </p>
+        </article>
+      </section>
+      <AboutDetails />
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="hero">
+      <div className="hero-copy">
+        <div className="command-line">
+          <span className="prompt">root@portfolio</span>
+          <span className="cursor-command">init --engineer-profile</span>
+        </div>
+        <h1>{profile.name}</h1>
+        <p className="role">{profile.role}</p>
+        <p className="lede">
+          Technology enthusiast, dual-degree undergraduate, product-minded
+          builder, and team lead who enjoys turning ambitious ideas into useful,
+          sharp, human-centered software.
+        </p>
+        <div className="hero-actions">
+          <a className="primary-action" href="#work">
+            <Code2 size={18} />
+            View Work
+          </a>
+          <a className="ghost-action" href="#contact">
+            <RadioTower size={18} />
+            Connect
+          </a>
+        </div>
+      </div>
+
+      <aside className="terminal-panel" aria-label="Developer profile terminal">
+        <div className="terminal-top">
+          <span />
+          <span />
+          <span />
+          <p>profile.log</p>
+        </div>
+        <div className="terminal-body">
+          <p>
+            <span>$</span> whoami
+          </p>
+          <strong>software_engineer / product_builder</strong>
+          <p>
+            <span>$</span> education --active
+          </p>
+          <code>AKTU_CSE + IITM_DATA_SCIENCE</code>
+          <p>
+            <span>$</span> focus
+          </p>
+          <code>software_dev | ui_ux | leadership | impact</code>
+          <p>
+            <span>$</span> current_mode
+          </p>
+          <strong className="neon-text">building meaningful systems</strong>
+        </div>
+      </aside>
+    </section>
+  );
+}
+
+function SignalStrip() {
+  const metrics = [
+    { icon: ShieldCheck, value: "Dual", label: "Degree Track" },
+    { icon: Award, value: "Lead", label: "Hackathon Teams" },
+    { icon: PanelsTopLeft, value: "UI/UX", label: "Workshop Mentor" },
+    { icon: Sparkles, value: "2+", label: "Featured Projects" },
+  ];
+
+  return (
+    <section className="signal-strip" aria-label="Core strengths">
+      <div className="metric-track">
+        {[...metrics, ...metrics].map((metric, index) => (
+          <Metric
+            key={`${metric.label}-${index}`}
+            icon={metric.icon}
+            value={metric.value}
+            label={metric.label}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Metric({ icon: Icon, value, label }) {
+  return (
+    <div className="metric">
+      <Icon size={20} />
+      <strong>{value}</strong>
+      <span>{label}</span>
+    </div>
+  );
+}
+
+function AboutDetails() {
+  return (
+    <section className="section about-section">
+      <div className="section-kicker">About</div>
+      <div className="section-layout">
+        <h2>Building at the intersection of code, design, and leadership.</h2>
+        <div className="section-text">
+          <p>
+            I am a technology enthusiast pursuing a B.Tech in Computer Science
+            and Engineering from AKTU and a B.S. in Data Science and
+            Applications from IIT Madras.
+          </p>
+          <p>
+            My work blends software development, product design, and team
+            leadership. I have led hackathon teams, including Smart India
+            Hackathon efforts, and conducted UI/UX workshops to help students
+            think more clearly about users, interfaces, and product decisions.
+          </p>
+          <div className="skill-grid">
+            {skills.map((skill) => (
+              <span key={skill}>{skill}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Projects() {
+  return (
+    <section className="section page-view" id="projects">
+      <div className="section-kicker">Projects</div>
+      <div className="section-heading-row">
+        <h2>Design-forward builds with product intent.</h2>
+        <p>
+          Both projects are intentionally vibe-coded and design-focused:
+          polished concepts that show taste, structure, and the ability to shape
+          an experience.
+        </p>
+      </div>
+      <div className="project-grid">
+        {projects.map((project, index) => (
+          <article className="project-card" key={project.title}>
+            <div className="project-index">0{index + 1}</div>
+            <p className="project-type">{project.type}</p>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+            <div className="tag-row">
+              {project.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+            <div className="project-footer">
+              <span>{project.status}</span>
+              <ArrowUpRight size={18} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Experience() {
+  return (
+    <section className="section page-view" id="journey">
+      <div className="section-kicker">Journey</div>
+      <div className="journey-split">
+        <JourneyColumn title="Education" items={educationItems} />
+        <JourneyColumn title="Experience" items={experienceItems} />
+      </div>
+    </section>
+  );
+}
+
+function JourneyColumn({ title, items }) {
+  return (
+    <div className="journey-column">
+      <h2>{title}</h2>
+      <div className="timeline">
+        {items.map((item) => (
+          <article className="timeline-item" key={item.title}>
+            <div className="timeline-icon">
+              <item.icon size={20} />
+            </div>
+            <div>
+              <p>{item.meta}</p>
+              <h3>
+                <span>{item.title}</span>
+                <span className="timeline-duration">{item.duration}</span>
+              </h3>
+              <span>{item.text}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Contact() {
+  return (
+    <section className="contact-section page-view">
+      <div>
+        <div className="section-kicker">Contact</div>
+        <h2>Have an idea, team, or problem worth building?</h2>
+        <p>
+          I am open to software engineering opportunities, hackathon
+          collaborations, product experiments, and design-heavy builds.
+        </p>
+      </div>
+      <div className="contact-actions">
+        <a href={`mailto:${profile.email}`}>
+          <Mail size={18} />
+          Email
+        </a>
+        <a href={profile.github} target="_blank" rel="noreferrer">
+          <Github size={18} />
+          GitHub
+        </a>
+        <a href={profile.linkedin} target="_blank" rel="noreferrer">
+          <Linkedin size={18} />
+          LinkedIn
+        </a>
+      </div>
+    </section>
+  );
+}
+
+createRoot(document.getElementById("root")).render(<App />);
