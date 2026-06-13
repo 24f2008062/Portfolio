@@ -18,6 +18,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 import "./styles.css";
 
 const profile = {
@@ -101,6 +102,7 @@ function App() {
       <div className="matrix-grid" aria-hidden="true" />
       <Header activePage={activePage} />
       <Page activePage={activePage} />
+      <Analytics />
     </main>
   );
 }
