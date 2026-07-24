@@ -224,13 +224,13 @@ function Hero() {
 
   return (
     <section className="hero">
-      {shouldRender3D && (
-        <Suspense fallback={null}>
+      <Suspense fallback={null}>
+        {shouldRender3D && (
           <Canvas3D>
             <HeroScene />
           </Canvas3D>
-        </Suspense>
-      )}
+        )}
+      </Suspense>
       <div className="hero-copy">
         <div className="command-line">
           <span className="prompt">root@portfolio</span>

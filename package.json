@@ -16,6 +16,7 @@
     "react-dom": "^19.0.0",
     "lucide-react": "^0.468.0",
     "@react-three/fiber": "^9.0.0",
+    "react-error-boundary": "^4.0.0",
     "three": "^0.165.0"
   },
   "devDependencies": {
