@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowUpRight,
@@ -18,6 +18,8 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
+import { ThreeDProvider, useThreeD } from "./context/ThreeDContext";
+import { TerminalPanel } from "./components/hero/TerminalPanel";
 import "./styles.css";
 
 const profile = {
@@ -38,7 +40,7 @@ const projects = [
       "A design-led platform for organizing tournaments across multiple games, built around clear flows for teams, brackets, schedules, and event control.",
     tags: ["Tournament Ops", "Dashboard UX", "Multi-game"],
     status: "Design-focused build",
-    link: "https://github.com/sanidhyexe/VORT-X",
+    link: "https://github.com/24f2008062/VORT-X",
   },
   {
     title: "Algo Master AI",
@@ -47,7 +49,16 @@ const projects = [
       "A personalized dashboard experience for students to track progress, stay consistent, and improve problem-solving through structured practice.",
     tags: ["EdTech", "Progress Tracking", "Student UX"],
     status: "Vibe-coded prototype",
-    link: "https://github.com/sanidhyexe/Algo-Master-AI",
+    link: "https://github.com/24f2008062/Algo-Master-AI",
+  },
+  {
+    title: "Uncooked Portal",
+    type: "Full-stack platform",
+    description:
+      "A full-stack platform that lets campus organizers host, manage, and analyze events — and gives attendees a fast, noise-free way to discover events, register, and carry digital tickets in their pocket.",
+    tags: ["Next.js", "React", "Tailwind CSS", "PostgreSQL", "Prisma", "NextAuth"],
+    status: "Production-ready MVP",
+    link: "https://github.com/24f2008062/Uncoockeds",
   },
 ];
 
@@ -67,17 +78,24 @@ const timeline = [
     text: "Pursuing Data Science and Applications with a focus on analytical thinking and applied computation.",
   },
   {
+    icon: Users,
+    title: "Cheif Prduct Officer",
+    meta: "UnfusedZ",
+    duration: "May 2026 - Present",
+    text: "Led teams through ideation, product direction, and fast execution for real-world problem statements.",
+  },
+  {
     icon: Trophy,
     title: "Hackathon Leadership",
     meta: "Smart India Hackathon and more",
-    duration: "Jan 2023 - Present",
+    duration: "Apr 2024 - May 2024",
     text: "Led teams through ideation, product direction, and fast execution for real-world problem statements.",
   },
   {
     icon: Users,
-    title: "UI/UX Workshops",
-    meta: "College community",
-    duration: "Feb 2023 - Apr 2024",
+    title: "UI/UX Member",
+    meta: "Google Developer Group on Campus",
+    duration: "Sep 2025 - Apr 2026",
     text: "Conducted workshops on design thinking, interface decisions, and user-centered product development.",
   },
 ];
@@ -97,11 +115,13 @@ function App() {
   }, []);
 
   return (
-    <main>
-      <div className="matrix-grid" aria-hidden="true" />
-      <Header activePage={activePage} />
-      <Page activePage={activePage} />
-    </main>
+    <ThreeDProvider>
+      <main>
+        <div className="matrix-grid" aria-hidden="true" />
+        <Header activePage={activePage} />
+        <Page activePage={activePage} />
+      </main>
+    </ThreeDProvider>
   );
 }
 
@@ -200,8 +220,17 @@ function About() {
 }
 
 function Hero() {
+  const { shouldRender3D } = useThreeD();
+
   return (
     <section className="hero">
+      {shouldRender3D && (
+        <Suspense fallback={null}>
+          <Canvas3D>
+            <HeroScene />
+          </Canvas3D>
+        </Suspense>
+      )}
       <div className="hero-copy">
         <div className="command-line">
           <span className="prompt">root@portfolio</span>
@@ -226,32 +255,7 @@ function Hero() {
         </div>
       </div>
 
-      <aside className="terminal-panel" aria-label="Developer profile terminal">
-        <div className="terminal-top">
-          <span />
-          <span />
-          <span />
-          <p>profile.log</p>
-        </div>
-        <div className="terminal-body">
-          <p>
-            <span>$</span> whoami
-          </p>
-          <strong>software_engineer / product_builder</strong>
-          <p>
-            <span>$</span> education --active
-          </p>
-          <code>AKTU_CSE + IITM_DATA_SCIENCE</code>
-          <p>
-            <span>$</span> focus
-          </p>
-          <code>software_dev | ui_ux | leadership | impact</code>
-          <p>
-            <span>$</span> current_mode
-          </p>
-          <strong className="neon-text">building meaningful systems</strong>
-        </div>
-      </aside>
+      <TerminalPanel />
     </section>
   );
 }
