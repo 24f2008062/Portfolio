@@ -113,7 +113,7 @@ function App() {
   useEffect(() => {
     const syncPage = () => setActivePage(getPageFromHash());
     window.addEventListener("hashchange", syncPage);
-    return (<h1>Test Hello World</h1>);
+    return () => window.removeEventListener("hashchange", syncPage);
   }, []);
 
   return (
